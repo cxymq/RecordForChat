@@ -15,6 +15,8 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 	
 	@IBOutlet weak var tableView: UITableView!
 	
+	var volumeView: VoiceVolumeView?
+	
 	var voiceList: NSMutableArray
 	
 	var audioSession: AVAudioSession?
@@ -76,6 +78,16 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 		}
 		
 		//显示录音视图
+		if (volumeView != nil) {
+			volumeView?.removeFromSuperview()
+		}
+		volumeView = VoiceVolumeView.init()
+		if let vv = volumeView {
+			vv.frame.size = CGSize.init(width: 120, height: 150)
+			vv.center = self.view.center
+			self.view.addSubview(vv)
+			vv.setVolumeView()
+		}
 		
 		//开始录音
 		countTime = 60
@@ -104,13 +116,17 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 			var voice = level*10 + 1
 			voice = voice > 8 ? 8 : voice
 			
-			let imageIndex = String.init(format: "voice_%ld", voice)
+			let imageIndex = String.init(format: "chat_volume%.f", round(voice))
 			if self.isLeaveSpeak! {
 				//设置取消的图片
 				
 			} else {
 				//设置音量的图片
 				print(imageIndex)
+				
+				if let vv = self.volumeView {
+					vv.changeVolumeImage(nameIndex: imageIndex)
+				}
 			}
 			
 			self.countTime = self.countTime - 1
@@ -178,6 +194,10 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 	//松开发送
 	@IBAction func speakClickTouchUpInside(_ sender: Any) {
 		print("------------speakClickTouchUpInside")
+		//隐藏录音视图
+		if (volumeView != nil) {
+			volumeView?.removeFromSuperview()
+		}
 		
 		isLeaveSpeak = false
 		
@@ -188,13 +208,11 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 			audioRecorder?.stop()
 		}
 		
-		
-		
 		//刷新列表
 		tableView.reloadData()
 	}
 	
-	//离开按钮区域 松开 取消
+	//离开按钮区域 松开 取消 "松开手指 取消发送"
 	@IBAction func speakClickTouchUpOutside(_ sender: Any) {
 		print("------------speakClickTouchUpOutside")
 		isLeaveSpeak = false
@@ -203,20 +221,38 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 		
 		voiceTimer?.invalidate()
 		voiceTimer = nil
-		
+	
 		if let _ = audioRecorder?.isRecording {
 			audioRecorder?.stop()
 		}
+		
+		//隐藏录音视图
+		if (volumeView != nil) {
+			volumeView?.removeFromSuperview()
+		}
+		
 	}
 	
 	@IBAction func speakClcikTouchDragExit(_ sender: Any) {
 		print("------------松开手指，取消发送")
 		isLeaveSpeak = true
+		
+		if let vv = self.volumeView {
+			vv.changeVolumeImage(nameIndex: "chat_volume_cancel")
+			vv.changeVolumeLb(text: "松开手指 取消发送", bgColor: UIColor.red)
+		}
+		
 	}
 	
 	@IBAction func speakClickTouchDragEnter(_ sender: Any) {
 		print("------------手指上滑，取消发送")
 		isLeaveSpeak = false
+		
+		if let vv = self.volumeView {
+			vv.changeVolumeImage(nameIndex: "")
+			vv.changeVolumeLb(text: "手指上滑 取消发送", bgColor: UIColor.clear)
+		}
+		
 	}
 	
 	//MARK:------method
