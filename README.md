@@ -56,7 +56,7 @@ AVLinearPCMIsFloatKey: false,
 AVLinearPCMIsBigEndianKey: false
  
 ] as [String : Any]
- ```
+```
 
 然后调用 record() 开始录音。
 
