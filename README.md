@@ -21,11 +21,10 @@
 录音开始前，先检测权限，如果允许，则设置音频硬件设备：
 ```
 audioS.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options: AVAudioSession.CategoryOptions.defaultToSpeaker)
- ```
- 
-```
+
+
 audioS.setActive(true, options: AVAudioSession.SetActiveOptions.init(rawValue: 0))
- ```
+```
 
 设置存放路径：
 ```
@@ -36,7 +35,7 @@ let order = voiceList.count as Int
 let namePath = "/Record\(String(describing: order)).wav"
  
 let voiceFilePath = path.appending(namePath)
- ```
+```
 
 进行录音设置：
 ```
@@ -70,10 +69,9 @@ AVLinearPCMIsBigEndianKey: false
 
 [Github](https://github.com/cxymq)
 
-[个人公众号:Flutter小同学]
+[个人公众号:Flutter小同学]  
 ![https://github.com/cxymq/Images/blob/master/0.失败预加载图片/error.jpg](https://github.com/cxymq/Images/blob/master/1.公众号二维码/qrcode.png)
 
 [个人网站](http://chenhui.today/)
 
---------------------- 
 
