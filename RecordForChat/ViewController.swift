@@ -83,7 +83,7 @@ class ViewController: UIViewController ,UITableViewDataSource ,UITableViewDelega
 		}
 		volumeView = VoiceVolumeView.init()
 		if let vv = volumeView {
-			vv.frame.size = CGSize.init(width: 120, height: 150)
+			vv.frame.size = CGSize.init(width: 120, height: 140)
 			vv.center = self.view.center
 			self.view.addSubview(vv)
 			vv.setVolumeView()

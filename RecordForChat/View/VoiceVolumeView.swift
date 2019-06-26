@@ -18,11 +18,11 @@ class VoiceVolumeView: UIView {
 		self.backgroundColor = UIColor.black.withAlphaComponent(0.5)
 		self.layer.cornerRadius = 10
 		
-		volumeImageView = UIImageView.init(frame: .init(x: 15, y: 10, width: self.frame.size.width-30, height: self.frame.size.height-40))
-		volumeImageView?.image = UIImage.init(named: "chat_volume0")
+		volumeImageView = UIImageView.init(frame: .init(x: 15, y: 10, width: self.frame.size.width-30, height: self.frame.size.height-50))
+		volumeImageView?.image = UIImage.init(named: "chat_volume1")
 		self.addSubview(volumeImageView!)
 		
-		volumeLb = UILabel.init(frame: CGRect.init(x: 5, y: self.frame.size.height-20, width: self.frame.size.width-10, height: 20))
+		volumeLb = UILabel.init(frame: CGRect.init(x: 5, y: self.frame.size.height-30, width: self.frame.size.width-10, height: 20))
 		volumeLb?.font = UIFont.systemFont(ofSize: 12)
 		volumeLb?.layer.masksToBounds = true
 		volumeLb?.layer.cornerRadius = 5
